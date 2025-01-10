@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Priorities Care: A Photovoice Project</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1a1a1a;
+            color: white;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .intro-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: left;
+            padding: 2rem;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .intro-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 70%, rgba(100, 255, 218, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .intro-content {
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1.2s ease forwards;
+            position: relative;
+            padding: 2rem;
+            border-radius: 1rem;
+            background: rgba(23, 42, 69, 0.7);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .intro-title {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #64ffda;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        .intro-paragraph {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: #8892b0;
+            transition: color 0.3s ease;
+        }
+
+        .intro-paragraph:hover {
+            color: #ccd6f6;
+        }
+
+        .view-button {
+            padding: 1rem 2rem;
+            font-size: 1.25rem;
+            background: transparent;
+            color: #64ffda;
+            border: 2px solid #64ffda;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .view-button:hover {
+            background: rgba(100, 255, 218, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(100, 255, 218, 0.2);
+        }
+
+        .gallery {
+            height: 100vh;
+            display: none;
+            position: relative;
+            background: #1a1a1a;;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            padding: 0.75rem 1.5rem;
+            background: rgba(100, 255, 218, 0.1);
+            color: #64ffda;
+            border: 1px solid #64ffda;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+        }
+
+        .back-button:hover {
+            background: rgba(100, 255, 218, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .carousel-container {
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .carousel {
+            display: flex;
+            transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+            height: 85vh;
+            position: absolute;
+            left: calc(50% - 40vw); /* Centers the current photo */
+        }
+
+        .photo-card {
+            width: 80vw;
+            height: 85vh;
+            perspective: 1500px;
+            cursor: pointer;
+            flex-shrink: 0;
+            margin: 0;
+            position: relative;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+            transform-style: preserve-3d;
+            box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
+        }
+
+        .photo-card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front,
+        .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 1rem;
+            overflow: hidden;
+            background: #2d2d2d;
+        }
+
+        .card-front::before {
+            content: 'Click to read the story';
+            position: absolute;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            background: rgba(10, 25, 47, 0.85);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.9rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .photo-card:hover .card-front::before {
+            opacity: 1;
+        }
+
+        .card-front img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .photo-card:hover .card-front img {
+            transform: scale(1.02);
+        }
+
+        .card-back {
+            background: #172a45;
+            transform: rotateY(180deg);
+            padding: 3rem;
+            overflow: auto;
+            font-size: 2.1rem;
+            line-height: 1.8;
+            color: #8892b0;
+        }
+
+        .card-back::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .card-back::-webkit-scrollbar-track {
+            background: #0a192f;
+        }
+
+        .card-back::-webkit-scrollbar-thumb {
+            background: #64ffda;
+            border-radius: 4px;
+        }
+
+        .nav-button {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(100, 255, 218, 0.1);
+            color: #64ffda;
+            border: 1px solid #64ffda;
+            border-radius: 50%;
+            width: 4rem;
+            height: 4rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-button:hover {
+            background: rgba(100, 255, 218, 0.2);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .prev-button {
+            left: 2rem;
+        }
+
+        .next-button {
+            right: 2rem;
+        }
+
+        .page-indicator {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(23, 42, 69, 0.9);
+            padding: 0.75rem 1.5rem;
+            border-radius: 2rem;
+            color: #64ffda;
+            font-weight: 500;
+            font-size: 1.1rem;
+            letter-spacing: 0.05em;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(100, 255, 218, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .intro-title {
+                font-size: 2rem;
+            }
+
+            .intro-paragraph {
+                font-size: 1.1rem;
+            }
+
+            .nav-button {
+                width: 3rem;
+                height: 3rem;
+            }
+
+            .prev-button {
+                left: 1rem;
+            }
+
+            .next-button {
+                right: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Rest of the HTML remains the same -->
+    <!-- Intro Section -->
+    <div id="intro" class="intro-section">
+        <div class="intro-content">
+            <h1 class="intro-title">Patient Priorities Care: A Photovoice Project</h1>
+            
+            <p class="intro-paragraph">
+                The photos and captions in this display were submitted by VA clinicians from throughout VHA as a part of a Photovoice project to tell the story of clinician experiences using Patient Priorities Care.
+            </p>
+
+            <p class="intro-paragraph">
+                Patient Priorities Care is the preferred age-friendly, Whole Health approach to aligning health care with What Matters for older persons with multiple chronic conditions.
+            </p>
+
+            <p class="intro-paragraph">
+                Here in this display, we present the experiences of sixteen VA clinicians, from nursing, medicine, psychology and social work, who have adopted the Patient Priorities Care approach as the guiding compass for the care they provide to Veterans.
+            </p>
+
+            <p class="intro-paragraph">
+                The photographs and captions in this Photovoice represent the unedited thoughts and feelings of these VA clinicians who practice Patient Priorities Care in multiple care settings with older Veterans.
+            </p>
+
+            <p class="intro-paragraph">
+                We hope this display encourages you to consider how to ask and act on What Matters for the Veterans you serve and learn more about the Patient Priorities Care approach.
+            </p>
+
+            <button class="view-button" onclick="showGallery()">Begin the Journey</button>
+        </div>
+    </div>
+
+    <!-- Gallery Section -->
+    <div id="gallery" class="gallery">
+        <button class="back-button" onclick="showIntro()">Return to Introduction</button>
+        <div class="carousel-container">
+            <button class="nav-button prev-button" onclick="prevPhoto()">←</button>
+            <button class="nav-button next-button" onclick="nextPhoto()">→</button>
+            <div class="carousel" id="carousel"></div>
+        </div>
+        <div class="page-indicator" id="pageIndicator"></div>
+    </div>
+
+    <script>
+        // Same JavaScript as before
+        const photos = [
+    {
+        id: 1,
+        imageSrc: './image001.jpg',
+        text: 'This photo represents the joy of a patient who just left the hospital and is now reunited with her 2-year-old great-grandchild. Being able to spend time with her family is one of the things that matters most to her. Witnessing the outcome of my PPC approach of care, brings joy to my heart.'
+    },  
+    {
+        id: 2,
+        imageSrc: './image002.jpg',
+        text: 'This photo represents the joy of flying high and enjoying life the best way possible given the patient’s current health status. Since adopting PPC approach of health discussions to What Matters Most, I feel more connected to my patients and they are enjoying life the best they can.'
+    },  
+    {
+        id: 3,
+        imageSrc: './image003.jpg',
+        text: 'This photo reminds me of the reason I continue to participate in PPC. This grandmother is reading to her great-grandsons right after leaving the hospital for a high-risk medical procedure. This photo represents her joy of doing what Matters Most to her: spending time with her family, especially the little ones. This photo also represents my own experiences of joy for being part of this patient’s happiness. This may be not possible if PPC was not introduced to this grandmother.'
+    },  // Added comma here
+    {
+        id: 4,
+        imageSrc: './image004.jpg',
+        text: 'This photo represents a patient’s joy of apple picking with her little great-grandchildren. After she was introduced to PPC, she made the decision to shift her own priorities from what her doctors want to what she wants to focus on, the time that she has left on earth. She is now focused on improving her mobility so she can do what matters most to her: spending time with her family.'
+    },
+    {
+        id: 5,
+        imageSrc: './image005.jpg',
+        text: 'This photo represents the joy and beauty of freedom to do what matters most to you. You may be able to navigate through the roads less visited due to health concerns. This photo reflects a patient on the way to visit her sister who she hasn’t seen for the last 15 years. A value of family lead to a goal of being mobile enough to travel far away to see her elder sister.'
+    },
+    {
+        id: 6,
+        imageSrc: './image006.jpg',
+        text: 'Caring for older adults with multiple chronic conditions can seem overwhelming at times, much like trying to take in a giant stadium all at once. However, implanting Patient Priorities Care in my practice has allowed me to focus my care around what matters to the older adults. The many medical issues, be that symptoms, diseases, medications, or healthcare tasks, don’t go away but it provides a way to align my care with what is most important to the older adult. This is somewhat like focusing only on the pitcher or home base during a game, not trying to take in the entire field all at once.'
+    },
+    {
+        id: 7,
+        imageSrc: './image007.jpg',
+        text: 'This beautiful bird, surrounded by foliage, reminds me of how Patient Priorities Care can help clinicians, older adults, and family members focus on the One Thing that matters most to the patient. There may be many competing issues, from chronic conditions to bothersome symptoms, but by eliciting What Matters we can make sure everyone is focused on what is most important to the older adult.'
+    },
+    {
+        id: 8,
+        imageSrc: './image008.jpg',
+        text: 'I really enjoy a good cup of coffee. The smell, the warmth of the cup in my hand, the taste, even the beautiful art on top of a perfect latte. Working with older adults to elicit and act on what matters most to them using the Patient Priories Care framework, it has become clear that What Matters is often something that seems relatively small. It could be going to a baseball game, sitting outside in the sunshine, or simply enjoying an outstanding cup of coffee. Allowing the space to focus on what matters to the older adult, instead of working through a checklist of medical issues, ensures that the little things which bring joy are not lost in a medicalized approach. '
+    },
+    {
+        id: 9,
+        imageSrc: './image009.jpg',
+        text: 'This little flower reminds me that health issues can be challenging and, at times, overwhelming for older adults and their clinicians. If we only focus on the multiple medical issues, much like only focusing on the rocks in this picture, we may miss out on the beauty of the flower. Like this hearty plant, Patient Priorities Care provides a framework to take a step back and better understand what matters to the older adult through the process of priority elicitation. Based on this, care can then be aligned to ensure that what is most important to the older adults continues to thrive… despite the challenges of chronic comorbidities or rock covered ground. '
+    },
+    {
+        id: 10,
+        imageSrc: './image010.jpg',
+        text: 'Joy. The most important thing engaging in Patient Priorities Care has brought to my medical practice is a feeling of joy. It is joy in knowing my patients better as individuals, understanding what matters to them, and then being able to focus my medical care around supporting their health outcome goals. I end an encounter with a feeling of joy in a meaningful human interaction, not simply feeling like I am going through a checklist of medical issues.'
+    },
+    {
+        id: 11,
+        imageSrc: './image011.jpg',
+        text: 'It’s not about throwing away the guidelines, it is about ensuring that the care we provide aligns with what would be most impactful to the patient. Ensuring that the care we provide is not just to get rid of or manage a bothersome symptom, but to strategically align care in a way that increases the patient’s agency to be an active participant in their own life. It can be easy to miss the patient and hyperfocus on the symptoms and clinical guidelines, but it is necessary to give equal emphasis to the science and the patient’s priorities. '
+    },
+    {
+        id: 12,
+        imageSrc: './image012.jpg',
+        text: 'Using PPC reinvigorates my drive to work with patients. When we take what matters to patients out of our practice, it becomes monotonous, cookie cutter, and stale. It’s like looking at the Ferris wheel from afar, each bucket is the same, just going through the motions. When we take a step closer, we can see the people in each bucket. We can identify the real-life impact that treating a patient’s pain can have in their life. We aren’t just working to get their pain to a 3/10. We are helping to get them to a point where they can prune their rose bush again, go on their morning walk with their dog, or drive a couple hours in the car to their grandson’s graduation. Helping patients in this way is fulfilling and seeing the end product of helping their lives become more meaningful excites me in a way that a pain rating scale never will. '
+    },
+    {
+        id: 13,
+        imageSrc: './image013.jpg',
+        text: 'As a psychologist, identifying patient values and goals is something that has always been incorporated into my practice. However, using PPC has changed the way that I engage in interdisciplinary care with my colleagues. It has pushed me to keep patient values at the center of these conversations with other specialties and reminded me that patient values are at the center of not just mental health, but also physical. Much like each drop of water coming together to create a wave in the ocean, when a care team is all on the same page in terms of the goals for a patient, we can more smoothly help a patient to re-engage in the important aspects of life. '
+    },
+    {
+        id: 14,
+        imageSrc: './image014.jpg',
+        text: 'You miss out on so much fruitful information if you are just looking at a patient, reading their chart, and checking their labs. The only way to know more about what matters to our patients is to dig in and ask. It’s like this pink pineapple. On the outside, it looks like any other pineapple. It is not until you cut into it that you see the nuance. '
+    },
+    {
+        id: 15,
+        imageSrc: './image015.jpg',
+        text: 'PPC is all about helping patients to re-engage in the meaningful parts of life. For many patients, this means targeting specific healthcare problems so that they might spend more time with loved ones. Going out to dinner with their wives, watching the grandkids after school, fellowshipping at their church on Sundays, going golfing with their friends in the afternoon, or even puddle jumping in the rain. At the end of the day, it is why our patients want good health in the first place. So, focusing my care around these goals reminds me why I wanted to become a clinician in the first place.'
+    },
+    {
+        id: 16,
+        imageSrc: './image016.jpg',
+        text: 'PPC is a reminder both in my practice and in my life to pause and remember what I am working towards. When I’m treating someone with multiple conditions and various needs, the amount of directions that can be taken may be overwhelming. Do I go left or right? Drive forward or go into reverse? In these moments, I stop and ask, “What is most important to this patient?” Recentering treatment decision making around what is meaningful to my patient is like using a map. I know which direction to head.'
+    }
+];
+
+
+     
+
+        let currentPhotoIndex = 0;
+
+        function createPhotoCard(photo) {
+            return `
+                <div class="photo-card" onclick="this.classList.toggle('flipped')">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <img src="${photo.imageSrc}" alt="Photo ${photo.id}">
+                        </div>
+                        <div class="card-back">
+                            ${photo.text}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function updateCarouselPosition() {
+            const carousel = document.getElementById('carousel');
+            carousel.style.transform = `translateX(${-currentPhotoIndex * 80}vw)`; // Match the photo-card width
+            updatePageIndicator();
+        }
+
+        function updatePageIndicator() {
+            const indicator = document.getElementById('pageIndicator');
+            indicator.textContent = `Story ${currentPhotoIndex + 1} of ${photos.length}`;
+        }
+
+        function nextPhoto() {
+            if (currentPhotoIndex < photos.length - 1) {
+                currentPhotoIndex++;
+                updateCarouselPosition();
+            }
+        }
+
+        function prevPhoto() {
+            if (currentPhotoIndex > 0) {
+                currentPhotoIndex--;
+                updateCarouselPosition();
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('gallery').style.display === 'block') {
+                if (e.key === 'ArrowRight') nextPhoto();
+                if (e.key === 'ArrowLeft') prevPhoto();
+            }
+        });
+
+        function showGallery() {
+            document.getElementById('intro').style.display = 'none';
+            document.getElementById('gallery').style.display = 'block';
+            const carousel = document.getElementById('carousel');
+            if (!carousel.children.length) {
+                carousel.innerHTML = photos.map(createPhotoCard).join('');
+                updatePageIndicator();
+            }
+        }
+
+        function showIntro() {
+            document.getElementById('gallery').style.display = 'none';
+            document.getElementById('intro').style.display = 'flex';
+        }
+    </script>
+</body>
+</html>
