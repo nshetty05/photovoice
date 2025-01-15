@@ -346,20 +346,21 @@
 
     <script>
         
-        function createContinueCard() {
-    return `
-        <div class="photo-card no-flip">
-            <div class="card-inner" style="background: #172a45; border-radius: 1rem; padding: 3rem; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
-                <h2 style="color: #64ffda; font-size: 2.5rem; margin-bottom: 2rem;">Continue the Journey</h2>
-                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-                    <a href="#link1" style="color: #64ffda; text-decoration: none; font-size: 1.5rem; padding: 1rem 2rem; border: 2px solid #64ffda; border-radius: 0.5rem; transition: all 0.3s ease; background: transparent;">Resource Link 1</a>
-                    <a href="#link2" style="color: #64ffda; text-decoration: none; font-size: 1.5rem; padding: 1rem 2rem; border: 2px solid #64ffda; border-radius: 0.5rem; transition: all 0.3s ease; background: transparent;">Resource Link 2</a>
-                    <a href="#link3" style="color: #64ffda; text-decoration: none; font-size: 1.5rem; padding: 1rem 2rem; border: 2px solid #64ffda; border-radius: 0.5rem; transition: all 0.3s ease; background: transparent;">Resource Link 3</a>
+    function createContinueCard() {
+        return `
+            <div class="photo-card no-flip">
+                <div class="card-inner" style="background: #172a45; border-radius: 1rem; padding: 3rem; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+                    <h2 style="color: #64ffda; font-size: 2.5rem; margin-bottom: 2rem;">Continue the Journey</h2>
+                    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                        <a href="#link1" style="color: #64ffda; text-decoration: none; font-size: 1.5rem; padding: 1rem 2rem; border: 2px solid #64ffda; border-radius: 0.5rem; transition: all 0.3s ease; background: transparent;">Resource Link 1</a>
+                        <a href="#link2" style="color: #64ffda; text-decoration: none; font-size: 1.5rem; padding: 1rem 2rem; border: 2px solid #64ffda; border-radius: 0.5rem; transition: all 0.3s ease; background: transparent;">Resource Link 2</a>
+                        <a href="#link3" style="color: #64ffda; text-decoration: none; font-size: 1.5rem; padding: 1rem 2rem; border: 2px solid #64ffda; border-radius: 0.5rem; transition: all 0.3s ease; background: transparent;">Resource Link 3</a>
+                    </div>
                 </div>
             </div>
-        </div>
-    `;
-}
+        `;
+    }
+
 
 const photos = [
 
@@ -445,7 +446,7 @@ const photos = [
     },
     {
         id: 17,
-        isContinueCard: true,
+        isContinueCard: true
         }
 ];
 
@@ -454,11 +455,9 @@ const photos = [
 
         let currentPhotoIndex = 0;
 
-        function createPhotoCard(photo) {
-            if (isContinueCard) {
-                return '
-                    <createContinueCard />
-                    '
+         function createPhotoCard(photo) {
+            if (photo.isContinueCard) {
+                return createContinueCard();
             }
             return `
                 <div class="photo-card" onclick="this.classList.toggle('flipped')">
