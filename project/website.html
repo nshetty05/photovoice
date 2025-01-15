@@ -345,8 +345,24 @@
     </div>
 
     <script>
-        // Same JavaScript as before
-        const photos = [
+        
+        function createContinueCard() {
+    return `
+        <div class="photo-card no-flip">
+            <div class="card-inner" style="background: #172a45; border-radius: 1rem; padding: 3rem; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+                <h2 style="color: #64ffda; font-size: 2.5rem; margin-bottom: 2rem;">Continue the Journey</h2>
+                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <a href="#link1" style="color: #64ffda; text-decoration: none; font-size: 1.5rem; padding: 1rem 2rem; border: 2px solid #64ffda; border-radius: 0.5rem; transition: all 0.3s ease; background: transparent;">Resource Link 1</a>
+                    <a href="#link2" style="color: #64ffda; text-decoration: none; font-size: 1.5rem; padding: 1rem 2rem; border: 2px solid #64ffda; border-radius: 0.5rem; transition: all 0.3s ease; background: transparent;">Resource Link 2</a>
+                    <a href="#link3" style="color: #64ffda; text-decoration: none; font-size: 1.5rem; padding: 1rem 2rem; border: 2px solid #64ffda; border-radius: 0.5rem; transition: all 0.3s ease; background: transparent;">Resource Link 3</a>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+const photos = [
+
     {
         id: 1,
         imageSrc: './image6.jpg',
@@ -426,7 +442,11 @@
         id: 16,
         imageSrc: './image10.jpg',
         text: '"Joy. The most important thing engaging in Patient Priorities Care has brought to my medical practice is a feeling of joy. It is joy in knowing my patients better as individuals, understanding what matters to them, and then being able to focus my medical care around supporting their health outcome goals. I end an encounter with a feeling of joy in a meaningful human interaction, not simply feeling like I am going through a checklist of medical issues." - A.G.C.'
-    }
+    },
+    {
+        id: 17,
+        isContinueCard: true,
+        }
 ];
 
 
@@ -435,6 +455,11 @@
         let currentPhotoIndex = 0;
 
         function createPhotoCard(photo) {
+            if (isContinueCard) {
+                return '
+                    <createContinueCard />
+                    '
+            }
             return `
                 <div class="photo-card" onclick="this.classList.toggle('flipped')">
                     <div class="card-inner">
