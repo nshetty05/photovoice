@@ -10,7 +10,7 @@
         body {
             margin: 0;
             font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #1a1a1a;
+            background: #292E71;
             color: white;
             overflow-x: hidden;
             line-height: 1.6;
@@ -24,7 +24,7 @@
             justify-content: center;
             text-align: left;
             padding: 2rem;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            background: linear-gradient(135deg, #292E71 0%, #225CAA 100%);
             position: relative;
             overflow: hidden;
         }
@@ -36,7 +36,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(circle at 30% 70%, rgba(100, 255, 218, 0.05) 0%, transparent 50%);
+            background: radial-gradient(circle at 30% 70%, rgba(238, 141, 35, 0.05) 0%, transparent 50%);
             pointer-events: none;
         }
 
@@ -49,7 +49,7 @@
             position: relative;
             padding: 2rem;
             border-radius: 1rem;
-            background: rgba(23, 42, 69, 0.7);
+            background: rgba(41, 46, 113, 0.7);
             backdrop-filter: blur(10px);
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
@@ -65,7 +65,7 @@
             font-family: 'Quicksand', sans-serif;
             font-size: 2.5rem;
             margin-bottom: 2rem;
-            color: #64ffda;
+            color: #1BADFD;
             font-weight: 600;
             letter-spacing: -0.02em;
             line-height: 1.2;
@@ -75,20 +75,20 @@
             font-family: 'Quicksand', sans-serif;
             font-size: 1.2rem;
             margin-bottom: 1.5rem;
-            color: #8892b0;
+            color: #1BADFD;
             transition: color 0.3s ease;
         }
 
         .intro-paragraph:hover {
-            color: #ccd6f6;
+            color: #EE8D23;
         }
 
         .view-button {
             padding: 1rem 2rem;
             font-size: 1.25rem;
             background: transparent;
-            color: #64ffda;
-            border: 2px solid #64ffda;
+            color: #EE8D23;
+            border: 2px solid #EE8D23;
             border-radius: 0.5rem;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -98,9 +98,9 @@
         }
 
         .view-button:hover {
-            background: rgba(100, 255, 218, 0.1);
+            background: rgba(238, 141, 35, 0.1);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(100, 255, 218, 0.2);
+            box-shadow: 0 4px 12px rgba(238, 141, 35, 0.2);
         }
 .view-button,
 .back-button,
@@ -112,7 +112,7 @@
             height: 100vh;
             display: none;
             position: relative;
-            background: #1a1a1a;;
+            background: #292E71;;
         }
 
         .back-button {
@@ -120,9 +120,9 @@
             top: 1rem;
             left: 1rem;
             padding: 0.75rem 1.5rem;
-            background: rgba(100, 255, 218, 0.1);
-            color: #64ffda;
-            border: 1px solid #64ffda;
+            background: rgba(238, 141, 35, 0.1);
+            color: #EE8D23;
+            border: 1px solid #EE8D23;
             border-radius: 0.5rem;
             cursor: pointer;
             z-index: 10;
@@ -132,7 +132,7 @@
         }
 
         .back-button:hover {
-            background: rgba(100, 255, 218, 0.2);
+            background: rgba(238, 141, 35, 0.2);
             transform: translateY(-1px);
         }
 
@@ -174,8 +174,56 @@
         .photo-card.flipped .card-inner {
             transform: rotateY(180deg);
         }
+.card-front::before {
+            content: 'Click to read the story';
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(34, 92, 170, 0.9);
+            color: #EE8D23;
+            padding: 0.75rem 1.5rem;
+            border-radius: 2rem;
+            font-size: 1.2rem;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 2;
+            font-family: 'Quicksand', sans-serif;
+            border: 1px solid #EE8D23;
+            backdrop-filter: blur(4px);
+        }
 
-        .card-front,
+        .photo-card:hover .card-front::before {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-10px);
+        }
+
+        .card-front::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(41, 46, 113, 0.2);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .photo-card:hover .card-front::after {
+            opacity: 1;
+        }
+
+.card-front {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 1rem;
+    overflow: hidden;
+    font-family: 'Quicksand', sans-serif;
+}
+
 .card-back {
     position: absolute;
     width: 100%;
@@ -218,13 +266,13 @@
         }
 
         .card-back {
-    background: #172a45;
+    background: #225CAA;
     transform: rotateY(180deg);
     padding: 3rem;
     overflow: auto;
     font-size: 2.1rem;
     line-height: 1.8;
-    color: #8892b0;
+    color: white;
 }
 
         .card-back::-webkit-scrollbar {
@@ -244,9 +292,9 @@
             position: fixed;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(100, 255, 218, 0.1);
-            color: #64ffda;
-            border: 1px solid #64ffda;
+            background: rgba(238, 141, 35, 0.1);
+            color: #EE8D23;
+            border: 1px solid #EE8D23;
             border-radius: 50%;
             width: 4rem;
             height: 4rem;
@@ -260,7 +308,7 @@
         }
 
         .nav-button:hover {
-            background: rgba(100, 255, 218, 0.2);
+            background: rgba(238, 141, 35, 0.2);
             transform: translateY(-50%) scale(1.1);
         }
 
@@ -278,15 +326,15 @@
             bottom: 2rem;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(23, 42, 69, 0.9);
+            background: rgba(34, 92, 170, 0.9);
             padding: 0.75rem 1.5rem;
             border-radius: 2rem;
-            color: #64ffda;
+            color: #EE8D23;
             font-weight: 500;
             font-size: 1.1rem;
             letter-spacing: 0.05em;
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(100, 255, 218, 0.2);
+            border: 1px solid rgba(238, 141, 35, 0.2);
         }
 
         @media (max-width: 768px) {
@@ -310,6 +358,22 @@
             .next-button {
                 right: 1rem;
             }
+        }
+.no-flip .card-inner {
+            background: #225CAA !important;
+        }
+
+        .no-flip .card-inner h2 {
+            color: #EE8D23 !important;
+        }
+
+        .no-flip .card-inner a {
+            color: #EE8D23 !important;
+            border: 2px solid #EE8D23 !important;
+        }
+
+        .no-flip .card-inner a:hover {
+            background: rgba(238, 141, 35, 0.1) !important;
         }
     </style>
 </head>
